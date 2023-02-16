@@ -136,7 +136,9 @@ class PdfTextPlugin: FlutterPlugin, MethodCallHandler {
    */
   private fun getDocPageText(result: Result, path: String, pageNumber: Int, password: String) {
     getDoc(result, path, password)?.use { doc ->
+
       val stripper = PDFTextStripper();
+      stripper.setShouldSeparateByBeads(true);
       stripper.startPage = pageNumber
       stripper.endPage = pageNumber
       val text = stripper.getText(doc)
@@ -155,6 +157,7 @@ class PdfTextPlugin: FlutterPlugin, MethodCallHandler {
     getDoc(result, path, password)?.use { doc ->
       val missingPagesTexts = arrayListOf<String>()
       val stripper = PDFTextStripper();
+      stripper.setShouldSeparateByBeads(true);
       missingPagesNumbers.forEach {
         stripper.startPage = it
         stripper.endPage = it
