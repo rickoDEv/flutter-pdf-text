@@ -15,7 +15,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.io.File
 import kotlin.concurrent.thread
-
+import dev.aluc.pdf_text.PDFTableStripper
 /** PdfTextPlugin */
 class PdfTextPlugin: FlutterPlugin, MethodCallHandler {
 
@@ -137,8 +137,7 @@ class PdfTextPlugin: FlutterPlugin, MethodCallHandler {
   private fun getDocPageText(result: Result, path: String, pageNumber: Int, password: String) {
     getDoc(result, path, password)?.use { doc ->
 
-      val stripper = PDFTextStripper();
-      stripper.setShouldSeparateByBeads(true);
+      val stripper = PDFTableStripper();
       stripper.startPage = pageNumber
       stripper.endPage = pageNumber
       val text = stripper.getText(doc)
@@ -156,7 +155,7 @@ class PdfTextPlugin: FlutterPlugin, MethodCallHandler {
   private fun getDocText(result: Result, path: String, missingPagesNumbers: List<Int>, password: String) {
     getDoc(result, path, password)?.use { doc ->
       val missingPagesTexts = arrayListOf<String>()
-      val stripper = PDFTextStripper();
+      val stripper = PDFTableStripper();
       stripper.setShouldSeparateByBeads(true);
       missingPagesNumbers.forEach {
         stripper.startPage = it
